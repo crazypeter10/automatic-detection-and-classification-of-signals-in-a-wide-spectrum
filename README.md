@@ -1,4 +1,4 @@
-# Signal Classification with CNN
+# Signal Classification with CNN max 2Mhz
 
 This project is focused on the **automatic detection and classification of signals** using a Convolutional Neural Network (CNN). The model is trained to distinguish between different types of synthetic signals: sinusoidal, noisy, and interference. This classification task can have applications in fields such as telecommunications, biomedical signal processing, radar, and security surveillance.
 
