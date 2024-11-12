@@ -20,16 +20,15 @@ def save_spectrogram(signal, label, file_name, sampling_rate=2_000_000):
     plt.axis('off')
     plt.savefig(file_name, bbox_inches='tight', pad_inches=0)
     plt.close()
-
 # Generăm date și salvăm spectrograme pentru fiecare categorie
-def generate_and_save_data(data_dir, num_samples=100):
+def generate_and_save_data(data_dir, num_samples=1000):  # creștem num_samples
     categories = ["sinusoidal", "noisy", "interference"]
     for category in categories:
         os.makedirs(os.path.join(data_dir, category), exist_ok=True)
 
     for i in range(num_samples):
         if i % 3 == 0:
-            freq = np.random.uniform(1, 1_000_000)  # Intervalul frecvenței între 1 Hz și 1 MHz
+            freq = np.random.uniform(1, 1_000_000)
             _, signal = generate_signal(freq)
             save_spectrogram(signal, "sinusoidal", f"{data_dir}/sinusoidal/{i}.png")
         
@@ -39,16 +38,15 @@ def generate_and_save_data(data_dir, num_samples=100):
             save_spectrogram(signal, "noisy", f"{data_dir}/noisy/{i}.png")
         
         else:
-            freq1, freq2 = np.random.uniform(1, 1_000_000, 2)
+            # Suprapunem 3 frecvențe pentru interferențe mai complexe
+            freq1, freq2, freq3 = np.random.uniform(1, 1_000_000, 3)
             t, signal1 = generate_signal(freq1)
             _, signal2 = generate_signal(freq2)
-            signal = signal1 + signal2
-            if np.random.rand() > 0.5:
-                _, signal3 = generate_signal(np.random.uniform(1, 1_000_000))
-                signal += signal3  # adăugăm un al treilea semnal pentru complexitate
+            _, signal3 = generate_signal(freq3)
+            signal = signal1 + signal2 + signal3
             save_spectrogram(signal, "interference", f"{data_dir}/interference/{i}.png")
 
-# Generăm datele de antrenament și test cu noile îmbunătățiri
+# Rulăm funcția pentru a genera date
 if __name__ == "__main__":
-    generate_and_save_data("data/train", num_samples=200)   # mai multe mostre pentru antrenament
-    generate_and_save_data("data/test", num_samples=50)     # mostre pentru testare
+    generate_and_save_data("data/train", num_samples=1000)  # mai multe mostre pentru antrenament
+    generate_and_save_data("data/test", num_samples=200)    # mai multe mostre pentru testare
