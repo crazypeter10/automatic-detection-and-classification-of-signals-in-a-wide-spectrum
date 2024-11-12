@@ -13,7 +13,7 @@ classes = ["sinusoidal", "noisy", "interference"]
 # Încarcă setul de date de testare și modelul
 test_loader = create_dataloader(data_dir, batch_size=batch_size)
 model = SignalCNN()
-model.load_state_dict(torch.load("model.pth"))  # Încărcăm modelul salvat
+model.load_state_dict(torch.load("model.pth", weights_only=True))  # Încărcăm modelul salvat
 model.eval()  # Setăm modelul în modul de evaluare
 
 # Funcția de evaluare și afișare a acurateței
